@@ -41,6 +41,7 @@
 
     <BoobooOverlay 
       :isOpen="showBooboo" 
+      :emoji="store.activeTile?.emoji"
       @dismiss="handleBoobooDismiss"
     />
     

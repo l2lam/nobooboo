@@ -31,7 +31,7 @@
           <span class="text-2xl font-black text-white drop-shadow-md">{{ tile.value }}</span>
         </template>
         <template v-else-if="tile.type === 'booboo'">
-          <span class="text-3xl">👹</span>
+          <span class="text-3xl">{{ tile.emoji || '👹' }}</span>
           <span class="text-xs font-bold text-red-500 uppercase tracking-widest mt-1">NO BOOBOOS!</span>
         </template>
         <template v-else>

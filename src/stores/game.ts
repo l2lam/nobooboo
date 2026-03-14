@@ -67,6 +67,7 @@ export const useGameStore = defineStore('game', {
       }
 
       // Randomly replace some with booboos
+      const boobooEmojis = ['👹', '👺', '👻', '👾', '👽', '🤡', '😈', '👿', '💩', '💀', '☠️', '🧟', '🧛'];
       let booboosPlaced = 0;
       while (booboosPlaced < boobooCount) {
         const idx = Math.floor(Math.random() * boardSize);
@@ -74,7 +75,8 @@ export const useGameStore = defineStore('game', {
           tiles[idx] = {
             id: `tile-${idx}`,
             type: 'booboo',
-            name: 'Booboo!'
+            name: 'Booboo!',
+            emoji: boobooEmojis[Math.floor(Math.random() * boobooEmojis.length)]
           };
           booboosPlaced++;
         }

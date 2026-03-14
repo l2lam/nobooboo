@@ -23,6 +23,7 @@ export interface Tile {
     value?: number; // for reward
     action?: SpecialAction; // for special
     name: string;
+    emoji?: string;
 }
 
 export interface VariableDefinition {

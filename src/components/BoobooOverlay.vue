@@ -6,7 +6,7 @@
     <div class="relative z-10 text-center flex flex-col items-center">
       <!-- Big Taunting Booboo -->
       <div class="text-[12rem] animate-bounce filter drop-shadow-[0_0_30px_rgba(239,68,68,0.8)]">
-        👹
+        {{ emoji }}
       </div>
       
       <h1 class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-red-400 to-red-600 uppercase tracking-widest mt-8 drop-shadow-2xl font-mono">
@@ -28,9 +28,12 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+withDefaults(defineProps<{
   isOpen: boolean;
-}>();
+  emoji?: string;
+}>(), {
+  emoji: '👹'
+});
 
 defineEmits<{
   (e: 'dismiss'): void;
