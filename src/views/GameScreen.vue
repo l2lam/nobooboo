@@ -103,8 +103,10 @@ function startSpinning() {
   spinDelay.value = store.spinSpeed;
   
   spinInterval = setInterval(() => {
-    let nextIdx = store.activeIndex + 1;
-    if (nextIdx >= store.board.length) nextIdx = 0;
+    let nextIdx;
+    do {
+      nextIdx = Math.floor(Math.random() * store.board.length);
+    } while (nextIdx === store.activeIndex && store.board.length > 1);
     store.setActiveIndex(nextIdx);
   }, spinDelay.value);
 }

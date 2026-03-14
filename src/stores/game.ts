@@ -104,7 +104,8 @@ export const useGameStore = defineStore('game', {
 
     startSpin() {
       this.isSpinning = true;
-      this.spinSpeed = 50; // fast spin initially
+      // Speed increases (delay decreases) as rounds progress
+      this.spinSpeed = Math.max(50, 200 - ((this.currentRound - 1) * 40)); 
     },
 
     stopSpin() {
