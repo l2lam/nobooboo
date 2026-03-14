@@ -1,0 +1,309 @@
+{
+    "id": "grade-1-math",
+    "category": "Math",
+    "name": "Ontario Grade 1 Math",
+    "description": "Comprehensive math following the 2020 Ontario Curriculum (Number Sense, Algebra, Data, Spatial Sense, and Financial Literacy).",
+    "questions": [
+        {
+            "id": "ont-g1-1",
+            "text": "What is `{{A}} + {{B}}`?",
+            "variables": {
+                "A": {
+                    "min": 1,
+                    "max": 10
+                },
+                "B": {
+                    "min": 1,
+                    "max": 10
+                }
+            },
+            "options": [
+                "`{{A + B}}`",
+                "`{{A + B + 1}}`",
+                "`{{A + B + 2}}`",
+                "`{{A + B - 1}}`"
+            ],
+            "correctIndex": 0
+        },
+        {
+            "id": "ont-g1-2",
+            "text": "What is `{{A}} - {{B}}`?",
+            "variables": {
+                "A": {
+                    "min": 5,
+                    "max": 15
+                },
+                "B": {
+                    "min": 1,
+                    "max": 4
+                }
+            },
+            "options": [
+                "`{{A - B + 1}}`",
+                "`{{A - B + 2}}`",
+                "`{{A - B}}`",
+                "`{{A - B - 1}}`"
+            ],
+            "correctIndex": 2
+        },
+        {
+            "id": "ont-g1-3",
+            "text": "What number comes right after `{{A}}`?",
+            "variables": {
+                "A": {
+                    "min": 10,
+                    "max": 40
+                }
+            },
+            "options": [
+                "`{{A - 1}}`",
+                "`{{A + 1}}`",
+                "`{{A + 2}}`",
+                "`{{A + 10}}`"
+            ],
+            "correctIndex": 1
+        },
+        {
+            "id": "ont-g1-4",
+            "text": "Skip counting by 5s: 5, 10, 15, ...?",
+            "options": [
+                "16",
+                "20",
+                "25",
+                "30"
+            ],
+            "correctIndex": 1
+        },
+        {
+            "id": "ont-g1-5",
+            "text": "1 ten and {{O}} ones is the same as...?",
+            "variables": {
+                "O": {
+                    "min": 1,
+                    "max": 9
+                }
+            },
+            "options": [
+                "`{{10 + O}}`",
+                "`{{O}}`",
+                "`{{10 * O}}`",
+                "`{{10 + O + 1}}`"
+            ],
+            "correctIndex": 0
+        },
+        {
+            "id": "ont-g1-8",
+            "text": "Which shape has 3 sides and 3 corners?",
+            "options": [
+                "Square",
+                "Circle",
+                "Triangle",
+                "Rectangle"
+            ],
+            "correctIndex": 2
+        },
+        {
+            "id": "ont-g1-9",
+            "text": "Which shape has 4 sides that are all the same length?",
+            "options": [
+                "Triangle",
+                "Rectangle",
+                "Square",
+                "Hexagon"
+            ],
+            "correctIndex": 2
+        },
+        {
+            "id": "ont-g1-10",
+            "text": "If you share a cookie with a friend equally, you each get a...?",
+            "options": [
+                "Whole",
+                "Half",
+                "Quarter",
+                "Nothing"
+            ],
+            "correctIndex": 1
+        },
+        {
+            "id": "ont-g1-11",
+            "text": "Which is HEAVIER?",
+            "options": [
+                "A feather",
+                "A leaf",
+                "A big rock",
+                "A pencil"
+            ],
+            "correctIndex": 2
+        },
+        {
+            "id": "ont-g1-12",
+            "text": "How many cents is a Nickel worth?",
+            "options": [
+                "1 cent",
+                "5 cents",
+                "10 cents",
+                "25 cents"
+            ],
+            "correctIndex": 1
+        },
+        {
+            "id": "ont-g1-13",
+            "text": "How many cents is a Dime worth?",
+            "options": [
+                "5 cents",
+                "10 cents",
+                "25 cents",
+                "100 cents"
+            ],
+            "correctIndex": 1
+        },
+        {
+            "id": "ont-g1-14",
+            "text": "What is the name of the Canadian $2 coin?",
+            "options": [
+                "Loonie",
+                "Toonie",
+                "Nickel",
+                "Quarter"
+            ],
+            "correctIndex": 1
+        },
+        {
+            "id": "ont-g1-15",
+            "text": "Which Canadian coin has a picture of a loon?",
+            "options": [
+                "Nickel",
+                "Dime",
+                "Loonie",
+                "Toonie"
+            ],
+            "correctIndex": 2
+        },
+        {
+            "id": "ont-g1-16",
+            "text": "Finish the pattern: Red, Blue, Red, Blue, ...?",
+            "options": [
+                "Red",
+                "Blue",
+                "Green",
+                "Yellow"
+            ],
+            "correctIndex": 0
+        },
+        {
+            "id": "ont-g1-17",
+            "text": "Solve: `{{A}} + ? = {{T}}`",
+            "variables": {
+                "A": {
+                    "min": 1,
+                    "max": 5
+                },
+                "T": {
+                    "min": 6,
+                    "max": 10
+                }
+            },
+            "options": [
+                "`{{T - A + 1}}`",
+                "`{{T - A}}`",
+                "`{{T - A - 1}}`",
+                "`{{T + A}}`"
+            ],
+            "correctIndex": 1
+        },
+        {
+            "id": "ont-g1-18",
+            "text": "Finish the skip counting: 2, 4, 6, 8, ...?",
+            "options": [
+                "9",
+                "10",
+                "12",
+                "14"
+            ],
+            "correctIndex": 1
+        },
+        {
+            "id": "ont-g1-19",
+            "text": "Which belongs in a group of RED things?",
+            "options": [
+                "Blue Car",
+                "Green Grass",
+                "Red Ball",
+                "Yellow Lemon"
+            ],
+            "correctIndex": 2
+        },
+        {
+            "id": "ont-g1-20",
+            "text": "Is it likely or unlikely that the sun will rise tomorrow?",
+            "options": [
+                "Impossible",
+                "Unlikely",
+                "Possible",
+                "Certain"
+            ],
+            "correctIndex": 3
+        },
+        {
+            "id": "ont-g1-21",
+            "text": "Can a cow fly to the moon?",
+            "options": [
+                "Impossible",
+                "Unlikely",
+                "Possible",
+                "Certain"
+            ],
+            "correctIndex": 0
+        },
+        {
+            "id": "ont-g1-22",
+            "text": "How many quarters make a whole loaf of bread?",
+            "options": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+            "correctIndex": 3
+        },
+        {
+            "id": "ont-g1-23",
+            "text": "What is 10 more than {{A}}?",
+            "variables": {
+                "A": {
+                    "min": 10,
+                    "max": 80
+                }
+            },
+            "options": [
+                "{{A + 1}}",
+                "{{A - 10}}",
+                "{{A + 10}}",
+                "{{A + 20}}"
+            ],
+            "correctIndex": 2
+        },
+        {
+            "id": "ont-g1-24",
+            "text": "A basketball is shaped most like a...?",
+            "options": [
+                "Circle",
+                "Sphere",
+                "Cube",
+                "Triangle"
+            ],
+            "correctIndex": 1
+        },
+        {
+            "id": "ont-g1-25",
+            "text": "Which is LONGER?",
+            "options": [
+                "A grain of rice",
+                "A school bus",
+                "A pencil",
+                "An ant"
+            ],
+            "correctIndex": 1
+        }
+    ]
+}
