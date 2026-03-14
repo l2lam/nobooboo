@@ -17,7 +17,11 @@
     </div>
 
     <!-- Main Game Board Area -->
-    <div v-else class="w-full max-w-7xl relative transition-all duration-500" :class="{ 'blur-sm scale-95': showBooboo || showQuestion }">
+    <div v-else class="w-full max-w-7xl relative transition-all duration-500 flex flex-col items-center" :class="{ 'blur-sm scale-95': showBooboo || showQuestion }">
+      <PlayerScores 
+        :players="store.players" 
+        :currentPlayerIndex="store.currentPlayerIndex" 
+      />
       <GameBoard :tiles="store.board" :activeIndex="store.activeIndex">
         <template #center>
           <CenterConsole 
@@ -53,6 +57,7 @@ import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGameStore } from '../stores/game';
 import GameBoard from '../components/GameBoard.vue';
+import PlayerScores from '../components/PlayerScores.vue';
 import CenterConsole from '../components/CenterConsole.vue';
 import QuestionModal from '../components/QuestionModal.vue';
 import BoobooOverlay from '../components/BoobooOverlay.vue';
