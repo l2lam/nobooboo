@@ -61,8 +61,8 @@ import PlayerScores from '../components/PlayerScores.vue';
 import CenterConsole from '../components/CenterConsole.vue';
 import QuestionModal from '../components/QuestionModal.vue';
 import BoobooOverlay from '../components/BoobooOverlay.vue';
-import { availableTopics } from '../data';
-import type { QuestionTemplate } from '../types';
+import ServiceFactory from '../services';
+import type { Question } from '../types';
 import { useAudio } from '../composables/useAudio';
 
 const store = useGameStore();
@@ -75,7 +75,7 @@ const spinDelay = ref(100);
 // UI State
 const showBooboo = ref(false);
 const showQuestion = ref(false);
-const activeQuestion = ref<QuestionTemplate | null>(null);
+const activeQuestion = ref<Question | null>(null);
 const currentTileValue = ref(0);
 
 onMounted(() => {
@@ -139,9 +139,9 @@ function handleStop() {
       store.applyBooboo();
     }, 500);
   } else if (tile.type === 'reward') {
-    setTimeout(() => {
+    setTimeout(async () => {
       currentTileValue.value = tile.value || 0;
-      activeQuestion.value = getRandomQuestionForPlayer();
+      activeQuestion.value = await getRandomQuestionForPlayer();
       showQuestion.value = true;
     }, 500);
   } else if (tile.type === 'special') {
@@ -184,21 +184,17 @@ function handleSpecialItem(action: string | undefined) {
   }
 }
 
-function getRandomQuestionForPlayer(): QuestionTemplate | null {
+async function getRandomQuestionForPlayer(): Promise<Question | null> {
   const player = store.currentPlayer;
-  if (!player) return null;
+  if (!player || player.topics.length === 0) return null;
   
-  // Find topics for player
-  const pTopicsStr = player.topics;
-  const matchTopics = availableTopics.filter(t => pTopicsStr.includes(t.id));
-  if (matchTopics.length === 0) return null;
+  // Pick a random topic ID from the player's selected topics
+  const targetTopicId = player.topics[Math.floor(Math.random() * player.topics.length)];
   
-  // Pick random topic
-  const targetTopic = matchTopics[Math.floor(Math.random() * matchTopics.length)];
-  if (!targetTopic.questions || targetTopic.questions.length === 0) return null;
-
-  // Pick random question
-  return targetTopic.questions[Math.floor(Math.random() * targetTopic.questions.length)];
+  const dataService = ServiceFactory.getDataService();
+  const qList = await dataService.getQuestions(targetTopicId, 1);
+  
+  return qList.length > 0 ? qList[0] : null;
 }
 
 function handleQuestionAnswer(isCorrect: boolean) {

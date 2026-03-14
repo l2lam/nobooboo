@@ -14,12 +14,31 @@
           </div>
 
           <div class="space-y-4">
-            <h3 class="text-xl font-bold text-slate-200">Topics</h3>
+            <div class="flex justify-between items-center">
+              <h3 class="text-xl font-bold text-slate-200">Topics</h3>
+              <button @click="handleEditTopic()" class="text-sm px-3 py-1 bg-slate-700 text-slate-300 rounded hover:bg-slate-600 transition-colors">
+                + ADD CUSTOM TOPIC
+              </button>
+            </div>
             <div class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-              <label v-for="topic in availableTopics" :key="topic.id" class="flex items-center space-x-3 p-3 bg-slate-900 rounded-lg border border-slate-700 hover:border-violet-500 cursor-pointer transition-colors">
-                <input type="checkbox" :value="topic.id" v-model="selectedTopics" class="w-5 h-5 text-pink-500 rounded focus:ring-pink-500 bg-slate-800 border-slate-600">
-                <span class="text-slate-300">{{ topic.name }}</span>
-              </label>
+              <div v-for="cat in categories" :key="cat" class="bg-slate-900 rounded-lg border border-slate-700 overflow-hidden">
+                <div @click="toggleCategory(cat)" class="flex justify-between items-center p-3 bg-slate-800 cursor-pointer hover:bg-slate-700 transition-colors">
+                  <span class="font-bold text-slate-300">{{ cat }}</span>
+                  <span class="text-slate-400 transition-transform duration-200" :class="{ 'rotate-180': collapsedCategories[cat] }">▼</span>
+                </div>
+                <div v-show="!collapsedCategories[cat]" class="divide-y divide-slate-700">
+                  <div v-for="topic in getTopicsByCategory(cat)" :key="topic.id" class="flex items-center justify-between p-3 hover:bg-slate-800/50 transition-colors">
+                    <label class="flex items-center space-x-3 cursor-pointer flex-1">
+                      <input type="checkbox" :value="topic.id" v-model="selectedTopics" class="w-5 h-5 text-pink-500 rounded focus:ring-pink-500 bg-slate-800 border-slate-600">
+                      <span class="text-slate-300" :title="topic.description">{{ topic.name }}</span>
+                    </label>
+                    <div class="flex space-x-2 ml-4">
+                      <button v-if="!topic.isBuiltIn" @click.stop="handleEditTopic(topic.id, false)" class="text-xs px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded">EDIT</button>
+                      <button v-else @click.stop="handleEditTopic(topic.id, true)" class="text-xs px-2 py-1 bg-green-600 hover:bg-green-500 text-white rounded">CLONE</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <p v-if="selectedTopics.length === 0" class="text-sm text-red-400">Please select at least one topic.</p>
           </div>
@@ -71,17 +90,59 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGameStore } from '../stores/game';
-import { availableTopics, AVATARS } from '../data';
+import { AVATARS } from '../data';
+import ServiceFactory from '../services';
+import type { Topic } from '../types';
+import { CATEGORY } from '../constants';
 
 const router = useRouter();
 const store = useGameStore();
 
 const rounds = ref(3);
-const selectedTopics = ref<string[]>(availableTopics.map(t => t.id));
+const selectedTopics = ref<string[]>([]);
 const newPlayerName = ref('');
+
+const topics = ref<Topic[]>([]);
+const categories = ref<string[]>([]);
+const collapsedCategories = ref<Record<string, boolean>>({});
+
+onMounted(async () => {
+  const dataService = ServiceFactory.getDataService();
+  const allTopics = await dataService.getAllTopics();
+  topics.value = allTopics;
+  
+  const cats = Array.from(new Set(allTopics.map(t => t.category || CATEGORY.CUSTOM)));
+  categories.value = cats.sort();
+
+  // Give default topics if not already selected perhaps, or select all generated
+  selectedTopics.value = [
+    'grade-1-math',
+    'grade-9-math',
+    'grade-9-science',
+    'grade-10-math',
+    'grade-10-science',
+    'grade-12-data'
+  ].filter(id => allTopics.some(t => t.id === id));
+});
+
+function getTopicsByCategory(cat: string) {
+  return topics.value.filter(t => (t.category || CATEGORY.CUSTOM) === cat);
+}
+
+function toggleCategory(cat: string) {
+  collapsedCategories.value[cat] = !collapsedCategories.value[cat];
+}
+
+function handleEditTopic(topicId?: string, isClone?: boolean) {
+  if (topicId) {
+    router.push({ path: '/editor', query: { topicId, isClone: isClone ? 'true' : 'false' } });
+  } else {
+    router.push('/editor');
+  }
+}
 
 const players = computed(() => store.players);
 

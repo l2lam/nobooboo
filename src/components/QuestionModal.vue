@@ -48,11 +48,11 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted } from 'vue';
-import type { QuestionTemplate } from '../types';
+import type { Question } from '../types';
 
 const props = defineProps<{
   isOpen: boolean;
-  question: QuestionTemplate | null;
+  question: Question | null;
   value: number;
 }>();
 
@@ -92,39 +92,12 @@ const timerColor = computed(() => {
   return 'text-red-500 bg-red-500/10 font-black animate-pulse';
 });
 
-function setupQuestion(q: QuestionTemplate) {
-  // Parse variables
-  const vars: Record<string, number> = {};
-  if (q.variables) {
-    for (const [key, def] of Object.entries(q.variables)) {
-      vars[key] = Math.floor(Math.random() * (def.max - def.min + 1)) + def.min;
-    }
-  }
-
-  // Replace {{ var }} or {{ expression }}
-  const parseTemplate = (str: string) => {
-    return str.replace(/`?\{\{(.*?)\}\}`?/g, (_, expr) => {
-      try {
-        // Safe-ish eval for math strings with variables
-        let evalStr = expr;
-        for (const [vKey, vVal] of Object.entries(vars)) {
-            // Replace word boundary keys
-            const regex = new RegExp(`\\b${vKey}\\b`, 'g');
-            evalStr = evalStr.replace(regex, vVal.toString());
-        }
-        return new Function(`return ${evalStr}`)();
-      } catch (e) {
-        return expr;
-      }
-    });
-  };
-
-  parsedQuestionText.value = parseTemplate(q.text);
+function setupQuestion(q: Question) {
+  parsedQuestionText.value = q.text;
   
   // Parse options and shuffle them
-  const rawOptions = q.options.map(o => parseTemplate(o));
-  actualCorrectIndex.value = q.correctIndex; // track where the true answer ends up
-
+  const rawOptions = [...q.options];
+  
   // simple shuffle mapping
   const indices = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
   parsedOptions.value = indices.map(i => rawOptions[i]);

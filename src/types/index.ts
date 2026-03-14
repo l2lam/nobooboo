@@ -50,6 +50,7 @@ export interface Topic {
     description?: string;
     category?: string;
     questions?: QuestionTemplate[];
+    isBuiltIn?: boolean;
 }
 
 export interface GameState {

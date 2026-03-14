@@ -14,6 +14,11 @@ const router = createRouter({
       path: '/game',
       name: 'game',
       component: GameScreen
+    },
+    {
+      path: '/editor',
+      name: 'editor',
+      component: () => import('../views/TopicsEditor.vue')
     }
   ]
 })
