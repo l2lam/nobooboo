@@ -160,6 +160,18 @@ export const useGameStore = defineStore('game', {
         }
       }
       this.winner = winnerId;
+    },
+
+    resetGame() {
+      this.isPlaying = false;
+      this.currentRound = 1;
+      this.currentPlayerIndex = 0;
+      this.winner = null;
+      this.board = [];
+      this.activeIndex = 0;
+      this.isSpinning = false;
+      // Reset player scores
+      this.players.forEach(p => p.score = 0);
     }
   }
 });

@@ -22,6 +22,16 @@
       class="absolute inset-0 flex flex-col items-center px-1 sm:px-2 py-1 sm:py-2 transition-all duration-500"
       :class="{ 'blur-sm scale-95': showBooboo || showQuestion }"
     >
+      <!-- Quit Button -->
+      <button 
+        v-if="store.isPlaying"
+        @click="handleQuit" 
+        class="absolute top-2 left-2 sm:top-4 sm:left-4 z-50 px-3 py-1.5 sm:px-4 sm:py-2 bg-slate-800/80 backdrop-blur-md border border-slate-700 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition-all flex items-center gap-2 group text-xs sm:text-sm"
+      >
+        <span class="group-hover:scale-110 transition-transform">X</span>
+        Quit Game
+      </button>
+
       <PlayerScores
         class="shrink-0"
         :players="store.players"
@@ -231,6 +241,14 @@ function finishTurn() {
     setTimeout(() => {
       startSpinning();
     }, 1000);
+  }
+}
+
+function handleQuit() {
+  if (confirm('Are you sure you want to quit the current game?')) {
+    stopSpinLoop();
+    store.resetGame();
+    router.push('/');
   }
 }
 </script>
