@@ -297,8 +297,9 @@ function handleFileUpload(event: Event) {
 
 .level-meta {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   align-items: center;
 }
 
@@ -312,8 +313,14 @@ function handleFileUpload(event: Event) {
 
 .options-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 600px) {
+  .options-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .opt-input {

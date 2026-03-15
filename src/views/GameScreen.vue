@@ -1,30 +1,39 @@
 <template>
-  <div class="min-h-screen bg-slate-900 flex flex-col items-center justify-center overflow-hidden relative">
+  <div class="h-screen bg-slate-900 flex flex-col items-center justify-center overflow-hidden relative">
     
-    <div v-if="!store.isPlaying" class="text-center space-y-4">
+    <div v-if="!store.isPlaying" class="text-center space-y-4 p-4">
       <div v-if="store.winner">
-         <h2 class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 mb-4">Game Over!</h2>
-         <p class="text-3xl text-white mb-2">Winner: {{ getWinnerNode()?.name }} {{ getWinnerNode()?.character.emoji }}</p>
-         <p class="text-2xl text-slate-300">Score: ${{ getWinnerNode()?.score }}</p>
+         <h2 class="text-3xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 mb-4">Game Over!</h2>
+         <p class="text-xl sm:text-2xl md:text-3xl text-white mb-2">Winner: {{ getWinnerNode()?.name }} {{ getWinnerNode()?.character.emoji }}</p>
+         <p class="text-lg sm:text-xl md:text-2xl text-slate-300">Score: ${{ getWinnerNode()?.score }}</p>
       </div>
       <div v-else>
-         <h2 class="text-3xl font-bold text-white">Not Started</h2>
+         <h2 class="text-2xl sm:text-3xl font-bold text-white">Not Started</h2>
       </div>
       
-      <button @click="$router.push('/')" class="mt-8 px-8 py-4 bg-blue-600 rounded-full font-bold text-white hover:bg-blue-500 hover:scale-105 transition-all text-xl shadow-lg">
+      <button @click="$router.push('/')" class="mt-8 px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 rounded-full font-bold text-white hover:bg-blue-500 hover:scale-105 transition-all text-lg sm:text-xl shadow-lg">
         Play Again
       </button>
     </div>
 
     <!-- Main Game Board Area -->
-    <div v-else class="w-full max-w-7xl relative transition-all duration-500 flex flex-col items-center" :class="{ 'blur-sm scale-95': showBooboo || showQuestion }">
-      <PlayerScores 
-        :players="store.players" 
-        :currentPlayerIndex="store.currentPlayerIndex" 
+    <div
+      v-else
+      class="absolute inset-0 flex flex-col items-center px-1 sm:px-2 py-1 sm:py-2 transition-all duration-500"
+      :class="{ 'blur-sm scale-95': showBooboo || showQuestion }"
+    >
+      <PlayerScores
+        class="shrink-0"
+        :players="store.players"
+        :currentPlayerIndex="store.currentPlayerIndex"
       />
-      <GameBoard :tiles="store.board" :activeIndex="store.activeIndex">
+      <GameBoard
+        class="flex-1 min-h-0 w-full"
+        :tiles="store.board"
+        :activeIndex="store.activeIndex"
+      >
         <template #center>
-          <CenterConsole 
+          <CenterConsole
             :currentPlayer="store.currentPlayer"
             :currentRound="store.currentRound"
             :totalRounds="store.totalRounds"
