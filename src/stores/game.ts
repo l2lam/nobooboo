@@ -55,7 +55,8 @@ export const useGameStore = defineStore('game', {
       const tiles: Tile[] = [];
       const boardSize = 24;
       
-      const boobooCount = Math.min(boardSize - 4, this.currentRound * 3); // More booboos in later rounds
+      const maxBooboos = Math.floor(boardSize * 0.5); // Never more than 50% booboos
+      const boobooCount = Math.min(maxBooboos, this.currentRound * 3); // More booboos in later rounds
       
       for (let i = 0; i < boardSize; i++) {
         tiles.push({

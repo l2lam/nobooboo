@@ -1,5 +1,5 @@
 import type { Question, QuestionTemplate, Topic } from '../types';
-import { factorial, permutations, combinations } from 'mathjs';
+import { factorial, permutations, combinations, evaluate as mathEvaluate } from 'mathjs';
 
 export abstract class BaseDataService {
     protected libraryTopics: Topic[] = [];
@@ -70,13 +70,19 @@ export abstract class BaseDataService {
                         return `{{${expression}}}`;
                     }
 
-                    const math = { factorial, permutations, combinations };
-                    const keys = [...Object.keys(values), 'math', 'factorial', 'permutations', 'combinations'];
-                    const args = [...Object.values(values), math, factorial, permutations, combinations];
+                    // Define scope holding all variable values and Math objects
+                    const scope = { 
+                        ...values, 
+                        math: { factorial, permutations, combinations }, 
+                        Math,
+                        factorial, 
+                        permutations, 
+                        combinations 
+                    };
 
-                    // eslint-disable-next-line no-new-func
-                    const func = new Function(...keys, `return (${expression})`);
-                    return func(...args).toString();
+                    // Evaluate using mathjs which evaluates functions inside safely
+                    const result = mathEvaluate(expression, scope);
+                    return result.toString();
                 } catch (e) {
                     console.error('Failed to eval expression:', expression, e);
                     return `{{${expression}}}`;

@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useGameStore } from '../stores/game';
 import { AVATARS } from '../data';
@@ -117,16 +117,28 @@ onMounted(async () => {
   const cats = Array.from(new Set(allTopics.map(t => t.category || CATEGORY.CUSTOM)));
   categories.value = cats.sort();
 
-  // Give default topics if not already selected perhaps, or select all generated
-  selectedTopics.value = [
-    'grade-1-math',
-    'grade-9-math',
-    'grade-9-science',
-    'grade-10-math',
-    'grade-10-science',
-    'grade-12-data'
-  ].filter(id => allTopics.some(t => t.id === id));
+  const STORAGE_KEY = 'nobooboo_selected_topics';
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    const savedIds: string[] = JSON.parse(saved);
+    // Only keep IDs that still exist in available topics
+    selectedTopics.value = savedIds.filter(id => allTopics.some(t => t.id === id));
+  } else {
+    // Default: select all built-in topics
+    selectedTopics.value = [
+      'grade-1-math',
+      'grade-9-math',
+      'grade-9-science',
+      'grade-10-math',
+      'grade-10-science',
+      'grade-12-data'
+    ].filter(id => allTopics.some(t => t.id === id));
+  }
 });
+
+watch(selectedTopics, (newVal) => {
+  localStorage.setItem('nobooboo_selected_topics', JSON.stringify(newVal));
+}, { deep: true });
 
 function getTopicsByCategory(cat: string) {
   return topics.value.filter(t => (t.category || CATEGORY.CUSTOM) === cat);

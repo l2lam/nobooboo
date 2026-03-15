@@ -12,9 +12,9 @@
 
       <!-- Question Content -->
       <div v-if="question" class="space-y-8">
-        <p class="text-2xl text-slate-200 leading-relaxed font-medium">
-          {{ parsedQuestionText }}
-        </p>
+        <div class="text-2xl text-slate-200 leading-relaxed font-medium text-center">
+          <MathJaxRenderer :content="parsedQuestionText" />
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button 
@@ -25,7 +25,7 @@
             class="p-6 text-xl rounded-xl border-2 text-left transition-all"
             :class="getOptionClasses(idx)"
           >
-            {{ opt }}
+            <MathJaxRenderer :content="opt" :inline="true" />
           </button>
         </div>
       </div>
@@ -49,6 +49,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted } from 'vue';
 import type { Question } from '../types';
+import MathJaxRenderer from './MathJaxRenderer.vue';
 
 const props = defineProps<{
   isOpen: boolean;
