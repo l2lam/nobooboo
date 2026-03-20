@@ -94,11 +94,63 @@ export function useAudio() {
     osc.stop(ctx.currentTime + 0.8);
   }
 
+  function playBooboo() {
+    initCtx();
+    if (!ctx) return;
+    
+    const now = ctx.currentTime;
+    const target = ctx.destination;
+    
+    // Part 1: Descending "Sad" Trombone
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = 'sawtooth';
+    osc1.frequency.setValueAtTime(300, now);
+    osc1.frequency.exponentialRampToValueAtTime(100, now + 1.2);
+    gain1.gain.setValueAtTime(0.2, now);
+    gain1.gain.exponentialRampToValueAtTime(0.01, now + 1.2);
+    osc1.connect(gain1);
+    gain1.connect(target);
+    osc1.start(now);
+    osc1.stop(now + 1.2);
+
+    // Part 2: Dischordant "Taunt" Notes
+    const audioCtx = ctx; // Closure for the loop
+    [392, 349.23, 311.13, 293.66].forEach((freq, idx) => {
+      const startTime = now + (idx * 0.15);
+      const osc2 = audioCtx.createOscillator();
+      const gain2 = audioCtx.createGain();
+      osc2.type = 'square';
+      osc2.frequency.setValueAtTime(freq, startTime);
+      gain2.gain.setValueAtTime(0.1, startTime);
+      gain2.gain.exponentialRampToValueAtTime(0.01, startTime + 0.15);
+      osc2.connect(gain2);
+      gain2.connect(target);
+      osc2.start(startTime);
+      osc2.stop(startTime + 0.15);
+    });
+
+    // Part 3: Low rumble/thud at the end
+    const osc3 = ctx.createOscillator();
+    const gain3 = ctx.createGain();
+    osc3.type = 'sine';
+    osc3.frequency.setValueAtTime(100, now + 1.0);
+    osc3.frequency.exponentialRampToValueAtTime(40, now + 1.5);
+    gain3.gain.setValueAtTime(0, now + 1.0);
+    gain3.gain.linearRampToValueAtTime(0.3, now + 1.1);
+    gain3.gain.exponentialRampToValueAtTime(0.01, now + 1.5);
+    osc3.connect(gain3);
+    gain3.connect(target);
+    osc3.start(now + 1.0);
+    osc3.stop(now + 1.5);
+  }
+
   return {
     initCtx,
     playTick,
     playStop,
     playSuccess,
-    playFail
+    playFail,
+    playBooboo
   };
 }

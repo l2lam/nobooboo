@@ -65,6 +65,7 @@
     <BoobooOverlay 
       :isOpen="showBooboo" 
       :emoji="store.activeTile?.emoji"
+      :startScore="boobooStartScore"
       @dismiss="handleBoobooDismiss"
     />
     
@@ -93,6 +94,7 @@ const spinDelay = ref(100);
 
 // UI State
 const showBooboo = ref(false);
+const boobooStartScore = ref(0);
 const showQuestion = ref(false);
 const activeQuestion = ref<Question | null>(null);
 const currentTileValue = ref(0);
@@ -152,8 +154,10 @@ function handleStop() {
   if (!tile) return;
   
   if (tile.type === 'booboo') {
+    const preScore = store.currentPlayer?.score || 0;
     setTimeout(() => {
-      audio.playFail();
+      audio.playBooboo();
+      boobooStartScore.value = preScore;
       showBooboo.value = true;
       store.applyBooboo();
     }, 500);
