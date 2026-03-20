@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import type { GameState, Tile, PlayerId, Character } from '../types';
+import { REWARD_EMOJIS } from '../constants';
 
 export const useGameStore = defineStore('game', {
   state: (): GameState => ({
@@ -59,11 +60,13 @@ export const useGameStore = defineStore('game', {
       const boobooCount = Math.min(maxBooboos, this.currentRound * 3); // More booboos in later rounds
 
       for (let i = 0; i < boardSize; i++) {
+        const reward = REWARD_EMOJIS[Math.floor(Math.random() * REWARD_EMOJIS.length)];
         tiles.push({
           id: `tile-${i}`,
           type: 'reward',
           name: `Reward ${i}`,
-          value: 100 + Math.floor(Math.random() * 5) * 100 // 100 to 500
+          value: reward.value,
+          emoji: reward.emoji
         });
       }
 

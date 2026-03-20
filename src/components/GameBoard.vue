@@ -31,11 +31,12 @@
       >
         <!-- Tile Content based on type -->
         <template v-if="tile.type === 'reward'">
-          <span class="text-[0.5rem] sm:text-xs md:text-base lg:text-2xl font-black text-white drop-shadow-md leading-none">{{ tile.value }}</span>
+          <span class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-none mb-1 drop-shadow-sm">{{ tile.emoji }}</span>
+          <span class="text-[0.5rem] sm:text-[0.7rem] md:text-xs lg:text-base font-black text-white drop-shadow-md leading-none">{{ tile.value }}</span>
         </template>
         <template v-else-if="tile.type === 'booboo'">
-          <span class="text-xs sm:text-base md:text-2xl lg:text-3xl leading-none">{{ tile.emoji || '👹' }}</span>
-          <span class="hidden sm:block text-[0.35rem] md:text-[0.5rem] lg:text-[0.6rem] font-bold text-red-500 uppercase tracking-tighter mt-0.5 text-center leading-none">NO BOOBOOS!</span>
+          <span class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-none transition-transform duration-300 hover:scale-110">{{ tile.emoji || '👹' }}</span>
+          <span class="hidden sm:block text-[0.35rem] md:text-[0.5rem] lg:text-[0.6rem] font-bold text-red-500 uppercase tracking-tighter mt-1 text-center leading-none">NO BOOBOOS!</span>
         </template>
         <template v-else>
           <span class="text-[0.35rem] sm:text-[0.5rem] md:text-[0.65rem] lg:text-sm font-bold text-yellow-300 uppercase text-center leading-tight">{{ tile.action }}</span>
