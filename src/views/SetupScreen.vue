@@ -2,7 +2,7 @@
   <div class="min-h-screen flex flex-col items-center p-3 sm:p-6 md:p-8">
     <div class="w-full max-w-4xl bg-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl border border-slate-700">
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-5 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
-        Game Setup
+        Mr. Lam's No Boo-Boos!
       </h1>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">

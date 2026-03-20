@@ -14,12 +14,12 @@ export const useGameStore = defineStore('game', {
     spinSpeed: 100,
     winner: null,
   }),
-  
+
   getters: {
     currentPlayer: (state) => state.players[state.currentPlayerIndex],
     activeTile: (state) => state.board[state.activeIndex] || null,
   },
-  
+
   actions: {
     addPlayer(name: string, character: Character, topics: string[]) {
       const id = Date.now().toString() + Math.random().toString().slice(2, 6);
@@ -54,10 +54,10 @@ export const useGameStore = defineStore('game', {
       // For now, let's just do 24 simple tiles.
       const tiles: Tile[] = [];
       const boardSize = 24;
-      
-      const maxBooboos = Math.floor(boardSize * 0.5); // Never more than 50% booboos
+
+      const maxBooboos = Math.floor(boardSize * 0.3); // Never more than 50% booboos
       const boobooCount = Math.min(maxBooboos, this.currentRound * 3); // More booboos in later rounds
-      
+
       for (let i = 0; i < boardSize; i++) {
         tiles.push({
           id: `tile-${i}`,
@@ -108,7 +108,7 @@ export const useGameStore = defineStore('game', {
     startSpin() {
       this.isSpinning = true;
       // Speed increases (delay decreases) as rounds progress
-      this.spinSpeed = Math.max(50, 200 - ((this.currentRound - 1) * 40)); 
+      this.spinSpeed = Math.max(50, 200 - ((this.currentRound - 1) * 40));
     },
 
     stopSpin() {
@@ -139,7 +139,7 @@ export const useGameStore = defineStore('game', {
       if (this.currentPlayerIndex >= this.players.length) {
         this.currentPlayerIndex = 0;
         this.currentRound++;
-        
+
         if (this.currentRound > this.totalRounds) {
           this.endGame();
         } else {
@@ -152,7 +152,7 @@ export const useGameStore = defineStore('game', {
       this.isPlaying = false;
       let highestScore = -1;
       let winnerId = null;
-      
+
       for (const p of this.players) {
         if (p.score > highestScore) {
           highestScore = p.score;
